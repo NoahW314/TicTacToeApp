@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="player_options">
+        <item>Human</item>
+        <item>Random CPU</item>
+        <item>Random Plus CPU</item>
+    </string-array>
+</resources>

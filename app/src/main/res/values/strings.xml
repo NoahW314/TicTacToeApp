@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+    <string name="player_1_turn">Player 1\'s Turn</string>
+    <string name="player_2_turn">Player 2\'s Turn</string>
+    <string name="cats_game">Cat\'s Game!</string>
+    <string name="player_1_win">Player 1 Wins!</string>
+    <string name="player_2_win">Player 2 Wins!</string>
+
+    <string name="player_1_win_count">Player 1 Wins: %1$d</string>
+    <string name="player_2_win_count">Player 2 Wins: %1$d</string>
+    <string name="game_count">Number of Games Played: %1$d</string>
+</resources>
