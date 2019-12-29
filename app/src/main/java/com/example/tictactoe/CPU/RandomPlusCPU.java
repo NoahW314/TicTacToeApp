@@ -1,18 +1,18 @@
 package com.example.tictactoe.CPU;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.example.tictactoe.Board;
-import com.example.tictactoe.GameManager;
+import com.example.tictactoe.CPUTerminatedException;
+import com.example.tictactoe.GameLogic.GameManager;
 import com.example.tictactoe.Views.SectionButton;
 
 import java.util.ArrayList;
 
 public class RandomPlusCPU extends RandomCPU{
 
-    public RandomPlusCPU(SectionButton.Marker marker, Activity activity) {
-        super(marker, activity);
+    public RandomPlusCPU(SectionButton.Marker marker, String type) {
+        super(marker, type);
     }
 
     public int[] twoOfThree(int[] three, Board board){
@@ -38,7 +38,7 @@ public class RandomPlusCPU extends RandomCPU{
     }
 
     @Override
-    public void play(GameManager gameManager) {
+    public int play(Board oldBoard) throws CPUTerminatedException {
 
         Log.v(TAG, "Playing...");
 
@@ -46,7 +46,9 @@ public class RandomPlusCPU extends RandomCPU{
         twoMarkers.add(new ArrayList<Integer>(10));
         twoMarkers.add(new ArrayList<Integer>(10));
 
-        Board board = gameManager.board;
+        Board board = new Board(oldBoard);
+
+        throwIfTerminated();
 
         for(int i = 0; i < 3; i++){
             int[] hor = twoOfThree(new int[]{i*3, i*3+1, i*3+2}, board);
@@ -58,6 +60,9 @@ public class RandomPlusCPU extends RandomCPU{
                 twoMarkers.get(ver[0]-1).add(ver[1]);
             }
         }
+
+        throwIfTerminated();
+
         for(int i = 0; i < 2; i++){
             int[] dia = twoOfThree(new int[]{i*2, 4, 8-i*2}, board);
             if(dia[0] != -1){
@@ -65,19 +70,19 @@ public class RandomPlusCPU extends RandomCPU{
             }
         }
 
+        throwIfTerminated();
+
         if(twoMarkers.get(ourMarker.id-1).size() > 0){
             Log.v(TAG, "Playing 2 ours");
-            gameManager.buttonPressed(twoMarkers.get(ourMarker.id-1).get(0), activity, 0);//500
-            return;
+            return twoMarkers.get(ourMarker.id-1).get(0);
         }
         if(twoMarkers.get(theirMarker.id-1).size() > 0){
             Log.v(TAG, "Playing 2 theirs");
-            gameManager.buttonPressed(twoMarkers.get(theirMarker.id-1).get(0), activity, 0);//500
-            return;
+            return twoMarkers.get(theirMarker.id-1).get(0);
         }
 
         Log.v(TAG, "Randomly Playing");
 
-        super.play(gameManager, 0);//500
+        return super.play(board);
     }
 }

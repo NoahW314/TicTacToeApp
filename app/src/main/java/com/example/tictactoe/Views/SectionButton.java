@@ -49,8 +49,8 @@ public class SectionButton extends AppCompatButton {
 
     @Override
     public void onDraw(Canvas canvas){
-        if(BoardActivity.manager != null) {
-            switch (BoardActivity.manager.board.get(sectionNum)) {
+        if(BoardActivity.manager != null && !BoardActivity.manager.inStatMode()) {
+            switch (BoardActivity.manager.getBoardSectionMarker(sectionNum)) {
                 case O:
                     canvas.drawCircle(getWidth() / 2, getHeight() / 2, Math.min(getWidth(), getHeight()) / 3, OPaint);
                     break;

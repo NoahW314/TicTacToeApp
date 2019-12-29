@@ -4,5 +4,15 @@
         <item>Human</item>
         <item>Random CPU</item>
         <item>Random Plus CPU</item>
+        <item>Monte Carlo CPU V1</item>
+        <item>Monte Carlo CPU V2</item>
+        <item>Monte Carlo CPU V3</item>
+        <item>Monte Carlo CPU V4</item>
+        <item>Monte Carlo CPU V5</item>
+        <item>Monte Carlo CPU Predictive V1</item>
+        <item>Monte Carlo CPU Predictive V2</item>
+        <item>Monte Carlo CPU Predictive V3</item>
+        <item>Monte Carlo CPU Predictive V4</item>
+        <item>Monte Carlo CPU Predictive V5</item>
     </string-array>
 </resources>

@@ -7,6 +7,12 @@ import java.util.ArrayList;
 public class Board extends ArrayList<SectionButton.Marker> {
     public Board(){
         super(9);
+        for (int i = 0; i < 9; i++) {
+            add(SectionButton.Marker.NONE);
+        }
+    }
+    public Board(Board board){
+        super(board);
     }
 
     public int[] findThree(){
@@ -38,9 +44,11 @@ public class Board extends ArrayList<SectionButton.Marker> {
         return three;
     }
 
-    public boolean isFull(){
-        for(SectionButton.Marker marker: this){
-            if(marker == SectionButton.Marker.NONE){return false;}
+    public boolean isFull() {
+        for (SectionButton.Marker marker : this) {
+            if (marker == SectionButton.Marker.NONE) {
+                return false;
+            }
         }
         return true;
     }

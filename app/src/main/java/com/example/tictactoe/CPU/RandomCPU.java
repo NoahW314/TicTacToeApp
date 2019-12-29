@@ -1,27 +1,22 @@
 package com.example.tictactoe.CPU;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.example.tictactoe.Board;
-import com.example.tictactoe.GameManager;
+import com.example.tictactoe.CPUTerminatedException;
+import com.example.tictactoe.GameLogic.GameManager;
 import com.example.tictactoe.Views.SectionButton;
 
 import java.util.ArrayList;
 
 public class RandomCPU extends CPU{
 
-    public RandomCPU(SectionButton.Marker marker, Activity activity) {
-        super(marker, activity);
+    public RandomCPU(SectionButton.Marker marker, String type) {
+        super(marker, type);
     }
 
-    @Override
-    public void play(GameManager gameManager){
-        play(gameManager, 0);//500
-    }
-
-    public void play(GameManager gameManager, int milliDelay){
-        Board board = gameManager.board;
+    public int play(Board oldBoard) throws CPUTerminatedException{
+        Board board = new Board(oldBoard);
         ArrayList<Integer> emptySquares = new ArrayList<>(9);
 
         for(int i = 0; i < 9; i++){
@@ -36,6 +31,6 @@ public class RandomCPU extends CPU{
 
         Log.v(TAG, selection+"");
 
-        gameManager.buttonPressed(selection, activity, milliDelay);
+        return selection;
     }
 }

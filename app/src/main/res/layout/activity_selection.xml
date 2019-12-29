@@ -60,13 +60,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/continuous_button"
+        android:id="@+id/stat_mode_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="200dp"
-        android:onClick="onContinuousClicked"
-        android:text="Continuous"
+        android:onClick="onStatModeClicked"
+        android:text="Stat Mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

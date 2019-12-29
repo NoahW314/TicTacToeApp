@@ -88,11 +88,16 @@ public class BoardLayout extends ViewGroup {
     }
 
     public void onCatsGame(){
-        getChildAt(9).invalidate();
+        redrawWinOverlay();
     }
     public void onWinner(int[] rowLocations){
         System.arraycopy(rowLocations, 0, ((EndMarker)getChildAt(9)).winningThree, 0, 3);
-        getChildAt(9).invalidate();
+        redrawWinOverlay();
+    }
+    public void redrawWinOverlay(){
+        this.post(new Runnable() {
+            public void run() { getChildAt(9).invalidate(); }
+        });
     }
 
     public void initDrawing(){
