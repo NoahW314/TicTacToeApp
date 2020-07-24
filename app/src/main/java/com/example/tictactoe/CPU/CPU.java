@@ -45,6 +45,12 @@ public abstract class CPU {
                 case "Random Plus CPU":
                     cpus[i] = new RandomPlusCPU(SectionButton.Marker.fromId(i+1), players.get(i));
                     break;
+                case "Random++ CPU":
+                    cpus[i] = new RandomPlusPlusCPU(SectionButton.Marker.fromId(i+1), players.get(i));
+                    break;
+                case "Random Plus Three CPU":
+                    cpus[i] = new RandomPlusThreeCPU(SectionButton.Marker.fromId(i+1), players.get(i));
+                    break;
                 case "Monte Carlo CPU V1":
                     cpus[i] = new MonteCarloCPU(SectionButton.Marker.fromId(i+1), players.get(i),1,1,1,1,1,1,1,1,1);
                     break;

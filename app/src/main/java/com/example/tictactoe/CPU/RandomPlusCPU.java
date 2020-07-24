@@ -8,39 +8,47 @@ import com.example.tictactoe.GameLogic.GameManager;
 import com.example.tictactoe.Views.SectionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RandomPlusCPU extends RandomCPU{
 
     public RandomPlusCPU(SectionButton.Marker marker, String type) {
         super(marker, type);
     }
+    public RandomPlusCPU(SectionButton.Marker marker, String type, boolean log){
+        super(marker, type, log);
+    }
 
     public int[] twoOfThree(int[] three, Board board){
         int[] twoP = new int[]{-1, -1};
 
-            if(board.get(three[0]) == board.get(three[1])
-                    && board.get(three[0]) != SectionButton.Marker.NONE
-                    && board.get(three[2]) == SectionButton.Marker.NONE){
-                twoP = new int[]{board.get(three[0]).id, three[2]};
-            }
-            else if(board.get(three[0]) == board.get(three[2])
-                    && board.get(three[2]) != SectionButton.Marker.NONE
-                    && board.get(three[1]) == SectionButton.Marker.NONE){
-                twoP = new int[]{board.get(three[2]).id, three[1]};
-            }
-            else if(board.get(three[1]) == board.get(three[2])
-                    && board.get(three[1]) != SectionButton.Marker.NONE
-                    && board.get(three[0]) == SectionButton.Marker.NONE){
-                twoP = new int[]{board.get(three[1]).id, three[0]};
-            }
+        if(board.get(three[0]) == board.get(three[1])
+                && board.get(three[0]) != SectionButton.Marker.NONE
+                && board.get(three[2]) == SectionButton.Marker.NONE){
+            twoP = new int[]{board.get(three[0]).id, three[2]};
+        }
+        else if(board.get(three[0]) == board.get(three[2])
+                && board.get(three[2]) != SectionButton.Marker.NONE
+                && board.get(three[1]) == SectionButton.Marker.NONE){
+            twoP = new int[]{board.get(three[2]).id, three[1]};
+        }
+        else if(board.get(three[1]) == board.get(three[2])
+                && board.get(three[1]) != SectionButton.Marker.NONE
+                && board.get(three[0]) == SectionButton.Marker.NONE){
+            twoP = new int[]{board.get(three[1]).id, three[0]};
+        }
 
         return twoP;
     }
 
+    public Strategy strategy = Strategy.UNKNOWN;
+    public int[] strategyCount = new int[Strategy.values().length];
+
     @Override
     public int play(Board oldBoard) throws CPUTerminatedException {
 
-        Log.v(TAG, "Playing...");
+        if(log) Log.v(TAG, "Playing...");
 
         ArrayList<ArrayList<Integer>> twoMarkers = new ArrayList<>(2);
         twoMarkers.add(new ArrayList<Integer>(10));
@@ -73,16 +81,36 @@ public class RandomPlusCPU extends RandomCPU{
         throwIfTerminated();
 
         if(twoMarkers.get(ourMarker.id-1).size() > 0){
-            Log.v(TAG, "Playing 2 ours");
+            if(log) Log.d(TAG, "Playing 2");
+            strategy = Strategy.WIN;
             return twoMarkers.get(ourMarker.id-1).get(0);
         }
         if(twoMarkers.get(theirMarker.id-1).size() > 0){
-            Log.v(TAG, "Playing 2 theirs");
+            if(log) Log.d(TAG, "Block 2");
+            strategy = Strategy.BLOCK;
             return twoMarkers.get(theirMarker.id-1).get(0);
         }
 
-        Log.v(TAG, "Randomly Playing");
+        strategy = Strategy.RANDOM;
 
         return super.play(board);
     }
+
+    public String getStrategies(){
+        StringBuilder builder = new StringBuilder();
+
+        for(int i = 0; i < strategyCount.length; i++){
+            builder.append(Strategy.values()[i].name());
+            builder.append(": ");
+            builder.append(strategyCount[i]);
+            builder.append("\n");
+        }
+
+        return builder.toString();
+    }
+
+    public enum Strategy{UNKNOWN(0), RANDOM(1), BLOCK(2), WIN(3), BLOCK_2(4), WIN_2(5), BLOCK_TRAP(6), SET_UP(7), TRAP(8), END(9);
+        public int id; Strategy(int id){ this.id = id; }}
+
+
 }

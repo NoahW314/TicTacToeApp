@@ -7,6 +7,8 @@ import android.widget.TextView;
 import com.example.tictactoe.Activities.BoardActivity;
 import com.example.tictactoe.Board;
 import com.example.tictactoe.CPU.CPU;
+import com.example.tictactoe.CPU.RandomPlusCPU;
+import com.example.tictactoe.CPU.RandomPlusPlusCPU;
 import com.example.tictactoe.CPUTerminatedException;
 import com.example.tictactoe.R;
 import com.example.tictactoe.SectionClickListener;
@@ -108,6 +110,9 @@ public class GameManagerImpl implements GameManager {
         int index = -1;
         try {
             index = CPUs[turn.id].play(new Board(board));
+            if(CPUs[turn.id] instanceof RandomPlusCPU){
+                ((RandomPlusCPU)CPUs[turn.id]).strategyCount[((RandomPlusCPU)CPUs[turn.id]).strategy.id]++;
+            }
         } catch(CPUTerminatedException e){ Log.d(TAG, "CPU Play terminated");}
         Log.d(TAG, "CPU playing at "+index);
         long thinkTime = System.currentTimeMillis() - startTime;
@@ -118,8 +123,9 @@ public class GameManagerImpl implements GameManager {
         else return play(index, activity, 750-thinkTime);
     }
     public void humanPlay(int index){
+        if(board.get(index) != SectionButton.Marker.NONE) return;
         synchronized (turnLock) {
-            Log.d(TAG, "Human Played at "+index);
+            Log.d(TAG, "Human Played at " + index);
             humanIndex = index;
             turnLock.notifyAll();
         }
@@ -254,6 +260,14 @@ public class GameManagerImpl implements GameManager {
 
     /**@return if a new game should be started*/
     private boolean autoStart(final BoardLayout layout){
+        if(statMode && gameNums >= 1000){
+            if(CPUs[0] instanceof RandomPlusCPU){
+                Log.i(CPU.TAG, ((RandomPlusCPU)CPUs[0]).getStrategies());
+            }
+            if(CPUs[1] instanceof RandomPlusCPU){
+                Log.i(CPU.TAG, ((RandomPlusCPU)CPUs[1]).getStrategies());
+            }
+        }
         return statMode && gameNums < 1000;
     }
 

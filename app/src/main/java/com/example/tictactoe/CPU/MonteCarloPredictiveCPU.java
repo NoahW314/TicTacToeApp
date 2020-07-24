@@ -9,7 +9,7 @@ import com.example.tictactoe.Views.SectionButton;
 
 import java.util.ArrayList;
 
-public class MonteCarloPredictiveCPU extends MonteCarloCPU{
+public class MonteCarloPredictiveCPU extends MonteCarloCPU {
     private CPU otherPlayer;
     public MonteCarloPredictiveCPU(SectionButton.Marker marker, String playerType, int... pathNum){
         super(marker, playerType, pathNum);
