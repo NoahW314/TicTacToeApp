@@ -105,4 +105,13 @@ public class Board extends ArrayList<SectionButton.Marker> {
         }
         return emptySquares;
     }
+
+    public int difference(Board board){
+        for(int i = 0; i < 9; i++){
+            if(this.get(i) != board.get(i)){
+                return i;
+            }
+        }
+        return -1;
+    }
 }

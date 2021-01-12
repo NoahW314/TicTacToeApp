@@ -18,9 +18,14 @@ public class RandomPlusPlusCPU extends RandomPlusCPU {
 
     @Override
     public int play(Board oldBoard) throws CPUTerminatedException {
+        return play(oldBoard, false);
+    }
+
+    @Override
+    public int play(Board oldBoard, boolean isSuperCall) throws CPUTerminatedException {
 
         //First, play like RandomPlus, unless it wants to play random, then look ahead
-        int randomPlusPlay = super.play(oldBoard);
+        int randomPlusPlay = super.play(oldBoard, true);
         if(strategy == Strategy.UNKNOWN){
             throw new RuntimeException("RandomPlus doesn't know what to play?");
         }
@@ -111,6 +116,7 @@ public class RandomPlusPlusCPU extends RandomPlusCPU {
         }*/
 
         //Otherwise, play randomly
+        if(log && !isSuperCall) Log.d(TAG, "Playing Randomly "+randomPlusPlay);
         return randomPlusPlay;
     }
 

@@ -23,11 +23,9 @@ public abstract class CPU {
     }
 
     public abstract int play(Board board) throws CPUTerminatedException;
-    public void terminate(){
-        terminate = true;
-    }
+    public void terminate(){terminate = true;}
     public void restart(){terminate = false;}
-    protected void throwIfTerminated()throws CPUTerminatedException {if(terminate) throw new CPUTerminatedException();}
+    protected void throwIfTerminated() throws CPUTerminatedException {if(terminate) throw new CPUTerminatedException();}
     public String getPlayerType(){return playerType;}
     public boolean isHuman(){return false;}
     public SectionButton.Marker getOurMarker() { return ourMarker; }
@@ -50,6 +48,9 @@ public abstract class CPU {
                     break;
                 case "Random Plus Three CPU":
                     cpus[i] = new RandomPlusThreeCPU(SectionButton.Marker.fromId(i+1), players.get(i));
+                    break;
+                case "Tree CPU":
+                    cpus[i] = new TreeCPU(SectionButton.Marker.fromId(i+1), players.get(i));
                     break;
                 case "Monte Carlo CPU V1":
                     cpus[i] = new MonteCarloCPU(SectionButton.Marker.fromId(i+1), players.get(i),1,1,1,1,1,1,1,1,1);

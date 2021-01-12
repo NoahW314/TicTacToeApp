@@ -47,6 +47,11 @@ public class RandomPlusCPU extends RandomCPU{
 
     @Override
     public int play(Board oldBoard) throws CPUTerminatedException {
+        return play(oldBoard, false);
+    }
+
+    @Override
+    public int play(Board oldBoard, boolean isSuperCall) throws CPUTerminatedException {
 
         if(log) Log.v(TAG, "Playing...");
 
@@ -81,19 +86,23 @@ public class RandomPlusCPU extends RandomCPU{
         throwIfTerminated();
 
         if(twoMarkers.get(ourMarker.id-1).size() > 0){
-            if(log) Log.d(TAG, "Playing 2");
+            int play = twoMarkers.get(ourMarker.id-1).get(0);
+            if(log) Log.d(TAG, "Playing 2 on "+play);
             strategy = Strategy.WIN;
-            return twoMarkers.get(ourMarker.id-1).get(0);
+            return play;
         }
         if(twoMarkers.get(theirMarker.id-1).size() > 0){
-            if(log) Log.d(TAG, "Block 2");
+            int play = twoMarkers.get(theirMarker.id-1).get(0);
+            if(log) Log.d(TAG, "Block 2 on "+play);
             strategy = Strategy.BLOCK;
-            return twoMarkers.get(theirMarker.id-1).get(0);
+            return play;
         }
 
         strategy = Strategy.RANDOM;
 
-        return super.play(board);
+        int randomPlay = super.play(board, true);
+        if(log && !isSuperCall) Log.d(TAG, "Playing Randomly "+randomPlay);
+        return randomPlay;
     }
 
     public String getStrategies(){

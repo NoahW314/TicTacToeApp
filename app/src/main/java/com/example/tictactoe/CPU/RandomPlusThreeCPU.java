@@ -8,6 +8,8 @@ import com.example.tictactoe.Views.SectionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+/* TODO: General problem with the RandomPluses CPUs. While blocking is a top priority, sometimes we
+*   can block with a move that advances us as well.  This type of CPU doesn't really see those moves.*/
 
 public class RandomPlusThreeCPU extends RandomPlusPlusCPU {
     public RandomPlusThreeCPU(SectionButton.Marker marker, String type) { super(marker, type); }
@@ -16,7 +18,7 @@ public class RandomPlusThreeCPU extends RandomPlusPlusCPU {
     @Override
     public int play(Board oldBoard) throws CPUTerminatedException {
         //First, play like Random++, unless it wants to play random, then look ahead
-        int randomPlusPlusPlay = super.play(oldBoard);
+        int randomPlusPlusPlay = super.play(oldBoard, true);
         if(strategy == Strategy.UNKNOWN){//paranoia
             throw new RuntimeException("RandomPlusPlus doesn't know what to play?");
         }

@@ -20,7 +20,12 @@ public class RandomCPU extends CPU {
         this.log = log;
     }
 
+    @Override
     public int play(Board oldBoard) throws CPUTerminatedException {
+        return play(oldBoard, false);
+    }
+
+    public int play(Board oldBoard, boolean isSuperCall) throws CPUTerminatedException {
         Board board = new Board(oldBoard);
         ArrayList<Integer> emptySquares = new ArrayList<>(9);
 
@@ -34,7 +39,7 @@ public class RandomCPU extends CPU {
         int emptySquaresIndex = (int)Math.floor(Math.random()*(emptySquares.size()));
         int selection = emptySquares.get(emptySquaresIndex);
 
-        if(log && !(this instanceof RandomPlusCPU)) Log.d(TAG, "Randomly Playing "+selection);
+        if(log && !isSuperCall) Log.d(TAG, "Randomly Playing "+selection);
 
         return selection;
     }
